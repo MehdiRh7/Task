@@ -1,0 +1,97 @@
+﻿@page
+@model Presentation.TestTask.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .footer{
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<form method="post" dir="rtl">
+    <div class="form-group">
+        <div style="line-height:50px">
+            <label for="usr">کد ملی:</label>
+            <input class="form-control" name="NIN" type="text" />
+        </div>
+        <br />
+        <input style="float:left; font-size:larger;" class="btn btn-outline-primary" type="submit" value="جستجـــــو" />
+        <p style="margin-top:-30px; color:red">@ViewData["NotFoundUser"]</p>
+    </div>
+
+</form>
+<br />
+<br />
+<br />
+
+@if (Model.Users != null)
+{
+    <div class="dropdown" style="float:right; width:100%">
+        <button style="width:100%" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            مدارک
+        </button>
+        <div style="width:100%; text-align:right; cursor:pointer" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            @if (Model.bCImages != null)
+            {
+                <a class="dropdown-item" onclick="Documents(@Model.birthCertificate.NIN , 'BCdocuments')">مدارک شناسنامه</a>
+            }
+            @if (Model.degreeImages != null)
+            {
+                <a class="dropdown-item" onclick="Documents(@Model.degree.FirstOrDefault().NIN , 'Degreedocuments')">مدارک تحصیلی</a>
+            }
+            @if (Model.pCImages != null)
+            {
+                <a class="dropdown-item" onclick="Documents(@Model.professionalCert.FirstOrDefault().NIN , 'PCdocuments')">مدارک شغلی</a>
+            }
+        </div>
+    </div>
+}
+
+    
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button style="width:100%" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="float:right" id="close" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalbody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Documents(id, doc) {
+        $.get("/Validation?id=" + id + "&doc=" + doc, function (result) {
+            $("#modalbody").html(result);
+            $(".modal").show();
+        });
+
+    }
+    $("#closeBtn").click(function () {
+        $(".modal").hide();
+    });
+    $("#close").click(function () {
+        $(".modal").hide();
+    });
+</script>
+

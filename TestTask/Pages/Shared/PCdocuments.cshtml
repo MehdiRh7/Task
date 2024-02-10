@@ -1,0 +1,111 @@
+﻿@page
+@model TestTask.Pages.Shared.PCdocumentsModel
+@using Infrastructure.Infrastructures.Convertor
+@{
+    List<int> GroupBy = new List<int>();
+    foreach (var i in Model.pCImages!)
+    {
+        if (!GroupBy.Any(x => x.Equals(i.ProfessionalCertID)))
+        {
+            GroupBy.Add(i.ProfessionalCertID);
+        }
+    }
+}
+<head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+        #box2 {
+            float: left;
+        }
+
+        #image {
+            height: 400px;
+            padding-bottom: 30px;
+        }
+
+        th {
+            height: 200px
+        }
+    </style>
+    <meta http-equiv="content-security-policy" content="frame-ancestors 'none';">
+</head>
+<div>
+    <center>
+        <table>
+            <tbody>
+                @for (int i = 0; i
+                < GroupBy.Count; i++)
+                {
+                    <tr>
+                        <th>
+                            @foreach (var p in Model.pCImages!)
+                            {
+                                if (p.ProfessionalCertID == GroupBy[i])
+                                {
+                                    <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                                        <p style="text-align: center; margin: 0; line-height: 50px;">@p.professionalCert.CompanyName</p>
+                                            
+                                    </div>
+                                    <p>شروع کار : @p.professionalCert.StartDate.ToShamsi().Replace(" - 0:0", "") - پایان کار : @p.professionalCert.EndDate.ToShamsi().Replace(" - 0:0", "")</p>
+                                    break;
+                                }
+
+                            }
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @foreach (var item2 in Model.pCImages!)
+                            {
+                                if (item2.ProfessionalCertID == GroupBy[i])
+                                {
+                                    <div style="position: relative; display: inline-block;">
+                                    <img id="image" src="~/Images/PC/@item2.ImageName" />
+                                        <a id="print-@(item2.Id)" href="~/Images/PC/@item2.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                    </div>
+                                    
+                                    <script>
+                                        $('#print-@item2.Id').on('click', function (e) {
+                                            e.preventDefault();
+
+                                            $source = $(this).attr('href');
+
+                                            win = window.open($source, "_blank");
+                                            win.onload = function () { win.print(); }
+                                        });
+                                    </script>
+                                }
+                            }
+                            <br />
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </center>
+
+
+</div>
+<script>
+    // if (document.referrer == 'https://localhost:44376/') {
+    //     alert(document.referrer);
+    // } else {
+    //     window.onload = function () {
+    //         window.location.href = 'https://localhost:44376/';
+    //         window.HTMLBodyElement = '';
+    //     };
+    // }
+</script>

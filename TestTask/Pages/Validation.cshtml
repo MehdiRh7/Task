@@ -1,0 +1,164 @@
+﻿@page
+@model TestTask.Pages.ValidationModel
+@{
+    Layout = null;
+}
+<style>
+    .authInput {
+        width: 2em;
+        height: 1.7em;
+        text-align: center;
+        margin-right: 5px;
+        font-size: 2em;
+        border-radius: 6px;
+        border: 1px solid rgb(37, 56, 74);
+        font-family: BKoodak;
+    }
+</style>
+
+<div class="page-heading" id="top" style="background-image:none; margin:0;">
+    <div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="inner-content">
+                    <center>
+                        <p style="font-size:large;"><b>لطفا کد 4 رقمی ارسال شده به ایمیل را وارد کنید</b></p>
+                        <br />
+                        <form id="myForm">
+                            <input style="" type="text" id="n0" class="authInput" maxlength="1" autocomplete="off" autofocus data-next="1" name="txt1">
+                            <input style="" type="text" id="n1" class="authInput" maxlength="1" autocomplete="off" data-next="2" data-previous="0" name="txt2">
+                            <input style="" type="text" id="n2" class="authInput" maxlength="1" autocomplete="off" data-next="3" data-previous="1" name="txt3">
+                            <input style="" type="text" id="n3" class="authInput" maxlength="1" autocomplete="off" data-previous="2" name="txt4">
+                            <p id="wrong" style="color:red; display:none;">متاسفانه کد وارد شده صحیح نیست</p>
+                            <hr />
+                            <div style="width:300px">
+                                <div style="float:right;">
+                                    <a id="SendAgain" style="display:none; cursor:pointer">ارسال مجدد کد</a>
+                                </div>
+                                <div id="time">
+                                    <span class="js-timeout">02:00</span>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            
+                            
+                        </form>
+                        <form id="hiddenForm" method="post" asp-page="/Shared/@ViewData["doc"]">
+                            <input type="hidden" name="Check" value=@ViewData["id"] />
+                        </form>
+                        <button onclick="submitForm()" id="sub" class="btn btn-success" style="width:300px; display:none;"></button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    var code = Model.otp.Generate();
+        <p id="code">@code</p>
+
+}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+<script>
+
+    $('.authInput').keyup(function (e) {
+        if (this.value.length === this.maxLength) {
+            let next = $(this).data('next');
+            $('#n' + next).focus();
+
+        }
+        else if (this.value.length === 0) {
+            let previous = $(this).data('previous');
+            $('#n' + previous).focus();
+        }
+    });
+
+    $('#n3').keyup(function (e) {
+        if (this.value.length === this.maxLength) {
+            var tempdata = @code;
+            var code = document.getElementById("n0").value + document.getElementById("n1").value + document.getElementById("n2").value + document.getElementById("n3").value;
+            if (tempdata == code && document.getElementById("code").innerHTML != "") {
+                    var submit = document.getElementById("sub");
+                    submit.click();
+                
+            }
+            else {
+                document.getElementById("wrong").style.display = "block";
+                document.getElementById("n0").style.outlineColor = "Red";
+                document.getElementById("n0").style.borderColor = "Red";
+                document.getElementById("n1").style.outlineColor = "Red";
+                document.getElementById("n1").style.borderColor = "Red";
+                document.getElementById("n2").style.outlineColor = "Red";
+                document.getElementById("n2").style.borderColor = "Red";
+                document.getElementById("n3").style.outlineColor = "Red";
+                document.getElementById("n3").style.borderColor = "Red";
+            }
+        }
+    });
+
+</script>
+<script>
+
+    var interval;
+
+    function countdown() {
+        clearInterval(interval);
+        interval = setInterval(function () {
+            var timer = $('.js-timeout').html();
+            timer = timer.split(':');
+            var minutes = timer[0];
+            var seconds = timer[1];
+            seconds -= 1;
+            if (minutes < 0) return;
+            else if (seconds < 0 && minutes != 0) {
+                minutes -= 1;
+                seconds = 59;
+            }
+            else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+
+            $('.js-timeout').html(minutes + ':' + seconds);
+            if (minutes == 0 && seconds == 0) {
+                document.getElementById("SendAgain").style.display = 'block';
+                clearInterval(interval);
+                document.getElementById("code").innerHTML = "";
+            }
+
+        }, 1000);
+
+    }
+    $('.js-timeout').text("2:00");
+    countdown();
+
+    $('#SendAgain').click(function () {
+        $('.js-timeout').text("2:00");
+        clearInterval(interval);
+        document.getElementById("code").innerHTML = @Model.otp.Generate();
+        document.getElementById("SendAgain").style.display = 'none';
+        countdown();
+    });
+
+</script>
+<script>
+    function submitForm(){
+        document.getElementById('hiddenForm').submit();
+    }
+</script>
+
+
+

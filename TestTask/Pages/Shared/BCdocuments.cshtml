@@ -1,0 +1,264 @@
+﻿@page
+@model Presentation.TestTask.Pages.Shared.BCdocumentsModel
+@{
+    var id = Model.bCImages.FirstOrDefault().BirthCertificateID;
+}
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+        #box2 {
+            float: left;
+        }
+
+        #image {
+            height: 400px;
+            padding-bottom: 30px;
+        }
+        th{
+            height:100px
+        }
+    </style>
+    <meta http-equiv="content-security-policy" content="frame-ancestors 'none';">
+</head>
+<div>
+    <center>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه اول و دوم</p>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه اول" || item.Title == "صفحه دوم")
+                            {
+                                <div style="position: relative; display: inline-block;">
+                                    <img id="image" src="/Images/BC/@item.ImageName" />
+                                    <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                </div>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه ازدواج و طلاق</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه سوم" || item.Title == "صفحه چهارم")
+                            {
+                                <div style="position: relative; display: inline-block;">
+                                    <img id="image" src="/Images/BC/@item.ImageName" />
+                                    <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                </div>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه اطلاعات فرزندان</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه پنجم")
+                            {
+                                <center>
+                                    <div style="position: relative; display: inline-block;">
+                                        <img id="image" src="/Images/BC/@item.ImageName" />
+                                        <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                    </div>
+                                </center>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه اطلاعات و مهر انتخابات</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه ششم")
+                            {
+                                <center>
+                                    <div style="position: relative; display: inline-block;">
+                                        <img id="image" src="/Images/BC/@item.ImageName" />
+                                        <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                    </div>
+                                </center>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه درج مهرهای اضطراری</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه هفتم")
+                            {
+                                <center>
+                                    <div style="position: relative; display: inline-block;">
+                                        <img id="image" src="/Images/BC/@item.ImageName" />
+                                        <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                    </div>
+                                </center>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div style="width: 100%; height: 50px; color:white; background-color:royalblue; border-radius:10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="text-align: center; margin: 0; line-height: 50px;">صفحه وفات و مشخصات فرد متوفی</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.bCImages!)
+                        {
+                            @if (item.Title == "صفحه هشتم")
+                            {
+                                <center>
+                                    <div style="position: relative; display: inline-block;">
+                                        <img id="image" src="/Images/BC/@item.ImageName" />
+                                        <a id="print-@(item.Id)" href="~/Images/PC/@item.ImageName" style="font-size:24px; position: absolute; bottom: 0; left: 0;" class="fa">&#xf02f;</a>
+                                    </div>
+                                </center>
+                                <script>
+                                    $('#print-@item.Id').on('click', function (e) {
+                                        e.preventDefault();
+
+                                        $source = $(this).attr('href');
+
+                                        win = window.open($source, "_blank");
+                                        win.onload = function () { win.print(); }
+                                    });
+                                </script>
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+
+
+</div>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+
+    // $.ready(function () {
+    //     alert(document.referrer)
+    //     if (document.referrer == "https://localhost:44376/") {
+    //         window.location.href = "https://localhost:44376/Shared/BCdocuments?id=" + @id;
+    //     }
+    //     else {
+    //         window.location.href = "https://localhost:44376/Shared/BCdocuments?id=";
+    //     }
+    // });
+
+</script>
