@@ -18,6 +18,15 @@
             position: absolute;
             bottom: 0;
         }
+
+        .circle-div {
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background-color: green;
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <form method="post" dir="rtl">
@@ -45,7 +54,13 @@
         <div style="width:100%; text-align:right; cursor:pointer" class="dropdown-menu" aria-labelledby="dropdownMenu2">
             @if (Model.bCImages != null)
             {
-                <a class="dropdown-item" onclick="Documents(@Model.birthCertificate.NIN , 'BCdocuments')">مدارک شناسنامه</a>
+                <a style="text-decoration: none;" class="dropdown-item" onclick="Documents(@Model.birthCertificate.NIN , 'BCdocuments')">
+                    @if (Model.birthCertificate.Status == true)
+                    {
+                        <span class="circle-div"></span>
+                    }
+                    <span style="display: inline-block; vertical-align: middle;">مدارک شناسنامه</span>
+                </a>
             }
             @if (Model.degreeImages != null)
             {
